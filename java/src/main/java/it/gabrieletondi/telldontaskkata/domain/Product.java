@@ -1,10 +1,10 @@
 package it.gabrieletondi.telldontaskkata.domain;
 
+import it.gabrieletondi.telldontaskkata.useCase.SellItemRequest;
+
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import static java.math.BigDecimal.valueOf;
-import static java.math.RoundingMode.HALF_DOWN;
 import static java.math.RoundingMode.HALF_UP;
 
 public class Product {
@@ -32,14 +32,20 @@ public class Product {
         this.category = category;
     }
 
-    public BigDecimal getUnitaryTax() {
+    private BigDecimal getUnitaryTax() {
         return price.divide(valueOf(100))
                 .multiply(category.getTaxPercentage())
                 .setScale(2, HALF_UP);
     }
 
-    public BigDecimal getUnitaryTaxedAmount(BigDecimal unitaryTax) {
-        return price.add(unitaryTax)
+    public BigDecimal getTaxedAmount(int quantity) {
+        return price.add(getUnitaryTax())
+                .setScale(2, HALF_UP)
+                .multiply(BigDecimal.valueOf(quantity))
                 .setScale(2, HALF_UP);
+    }
+
+    public BigDecimal getTaxAmount(SellItemRequest itemRequest) {
+        return getUnitaryTax().multiply(BigDecimal.valueOf(itemRequest.getQuantity()));
     }
 }
