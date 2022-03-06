@@ -1,12 +1,9 @@
 package it.gabrieletondi.telldontaskkata.useCase;
 
 import it.gabrieletondi.telldontaskkata.domain.Order;
-import it.gabrieletondi.telldontaskkata.domain.OrderItem;
 import it.gabrieletondi.telldontaskkata.domain.Product;
 import it.gabrieletondi.telldontaskkata.repository.OrderRepository;
 import it.gabrieletondi.telldontaskkata.repository.ProductCatalog;
-
-import java.math.BigDecimal;
 
 import static java.math.BigDecimal.valueOf;
 
@@ -29,14 +26,7 @@ public class OrderCreationUseCase {
                 throw new UnknownProductException();
             }
             else {
-                final BigDecimal taxAmount = product.getTaxAmount(itemRequest.getQuantity());
-                final BigDecimal taxedAmount = product.getTaxedAmount(itemRequest.getQuantity());
-
-                final OrderItem orderItem = new OrderItem(product, itemRequest.getQuantity(), taxAmount, taxedAmount);
-                order.addItem(orderItem);
-
-                order.addTaxedAmountToTotal(taxedAmount);
-                order.addTaxAmount(taxAmount);
+                order.addProductToOrder(product, itemRequest.getQuantity());
             }
         }
 

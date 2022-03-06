@@ -81,4 +81,15 @@ public class Order {
     public void addTaxAmount(BigDecimal taxAmount) {
         tax = tax.add(taxAmount);
     }
+
+    public void addProductToOrder(Product product, int quantity) {
+        final BigDecimal taxAmount = product.getTaxAmount(quantity);
+        final BigDecimal taxedAmount = product.getTaxedAmount(quantity);
+
+        final OrderItem orderItem = new OrderItem(product, quantity, taxAmount, taxedAmount);
+        addItem(orderItem);
+
+        addTaxedAmountToTotal(taxedAmount);
+        addTaxAmount(taxAmount);
+    }
 }
