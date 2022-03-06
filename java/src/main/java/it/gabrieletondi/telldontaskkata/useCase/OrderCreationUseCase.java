@@ -29,7 +29,7 @@ public class OrderCreationUseCase {
                 throw new UnknownProductException();
             }
             else {
-                final BigDecimal taxAmount = product.getTaxAmount(itemRequest);
+                final BigDecimal taxAmount = product.getTaxAmount(itemRequest.getQuantity());
                 final BigDecimal taxedAmount = product.getTaxedAmount(itemRequest.getQuantity());
 
                 final OrderItem orderItem = new OrderItem(product, itemRequest.getQuantity(), taxAmount, taxedAmount);
