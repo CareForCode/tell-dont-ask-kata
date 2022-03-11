@@ -27,18 +27,19 @@ public class OrderCreationUseCaseTest {
     }};;
     private final ProductCatalog productCatalog = new InMemoryProductCatalog(
             Arrays.<Product>asList(
-                    new Product() {{
-                        setName("salad");
-                        setPrice(new BigDecimal("3.56"));
-                        setCategory(food);
-                    }},
-                    new Product() {{
-                        setName("tomato");
-                        setPrice(new BigDecimal("4.65"));
-                        setCategory(food);
-                    }}
+                    getProduct("salad", new BigDecimal("3.56"), food),
+                    getProduct("tomato", new BigDecimal("4.65"), food)
             )
     );
+
+    private Product getProduct(final String name, final BigDecimal price, final Category category) {
+        return new Product() {{
+            setName(name);
+            setPrice(price);
+            setCategory(category);
+        }};
+    }
+
     private final OrderCreationUseCase useCase = new OrderCreationUseCase(orderRepository, productCatalog);
 
     @Test
