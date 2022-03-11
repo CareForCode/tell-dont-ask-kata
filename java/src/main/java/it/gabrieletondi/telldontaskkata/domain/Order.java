@@ -7,12 +7,12 @@ import java.util.List;
 import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.CREATED;
 
 public class Order {
-    private BigDecimal total;
     private final String currency;
     private final List<OrderItem> items;
+    private final int id;
+    private BigDecimal total;
     private BigDecimal tax;
     private OrderStatus status;
-    private final int id;
 
     public Order(OrderStatus status, int id) {
         this.status = status;
