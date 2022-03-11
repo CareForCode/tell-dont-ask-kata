@@ -30,5 +30,4 @@ public class OrderItem {
     public BigDecimal getTax() {
         return tax;
     }
-
 }
