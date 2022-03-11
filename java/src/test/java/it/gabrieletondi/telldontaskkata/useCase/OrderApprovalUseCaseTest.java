@@ -14,15 +14,16 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class OrderApprovalUseCaseTest {
+    public static final int ORDER_ID = 1;
     private final TestOrderRepository orderRepository = new TestOrderRepository();
     private final OrderApprovalUseCase useCase = new OrderApprovalUseCase(orderRepository);
 
     @Test
     public void approvedExistingOrder() throws Exception {
-        Order initialOrder = new Order(OrderStatus.CREATED, 1);
+        Order initialOrder = new Order(OrderStatus.CREATED, ORDER_ID);
         orderRepository.addOrder(initialOrder);
 
-        OrderApprovalRequest request = new OrderApprovalRequest(1, true);
+        OrderApprovalRequest request = new OrderApprovalRequest(ORDER_ID, true);
 
         useCase.run(request);
 
@@ -32,10 +33,10 @@ public class OrderApprovalUseCaseTest {
 
     @Test
     public void rejectedExistingOrder() throws Exception {
-        Order initialOrder = new Order(OrderStatus.CREATED, 1);
+        Order initialOrder = new Order(OrderStatus.CREATED, ORDER_ID);
         orderRepository.addOrder(initialOrder);
 
-        OrderApprovalRequest request = new OrderApprovalRequest(1, false);
+        OrderApprovalRequest request = new OrderApprovalRequest(ORDER_ID, false);
 
         useCase.run(request);
 
@@ -45,10 +46,10 @@ public class OrderApprovalUseCaseTest {
 
     @Test(expected = RejectedOrderCannotBeApprovedException.class)
     public void cannotApproveRejectedOrder() throws Exception {
-        Order initialOrder = new Order(OrderStatus.REJECTED, 1);
+        Order initialOrder = new Order(OrderStatus.REJECTED, ORDER_ID);
         orderRepository.addOrder(initialOrder);
 
-        OrderApprovalRequest request = new OrderApprovalRequest(1, true);
+        OrderApprovalRequest request = new OrderApprovalRequest(ORDER_ID, true);
 
         useCase.run(request);
 
@@ -57,10 +58,10 @@ public class OrderApprovalUseCaseTest {
 
     @Test(expected = ApprovedOrderCannotBeRejectedException.class)
     public void cannotRejectApprovedOrder() throws Exception {
-        Order initialOrder = new Order(OrderStatus.APPROVED, 1);
+        Order initialOrder = new Order(OrderStatus.APPROVED, ORDER_ID);
         orderRepository.addOrder(initialOrder);
 
-        OrderApprovalRequest request = new OrderApprovalRequest(1, false);
+        OrderApprovalRequest request = new OrderApprovalRequest(ORDER_ID, false);
 
         useCase.run(request);
 
@@ -69,10 +70,10 @@ public class OrderApprovalUseCaseTest {
 
     @Test(expected = ShippedOrdersCannotBeChangedException.class)
     public void shippedOrdersCannotBeApproved() throws Exception {
-        Order initialOrder = new Order(OrderStatus.SHIPPED, 1);
+        Order initialOrder = new Order(OrderStatus.SHIPPED, ORDER_ID);
         orderRepository.addOrder(initialOrder);
 
-        OrderApprovalRequest request = new OrderApprovalRequest(1, true);
+        OrderApprovalRequest request = new OrderApprovalRequest(ORDER_ID, true);
 
         useCase.run(request);
 
@@ -81,10 +82,10 @@ public class OrderApprovalUseCaseTest {
 
     @Test(expected = ShippedOrdersCannotBeChangedException.class)
     public void shippedOrdersCannotBeRejected() throws Exception {
-        Order initialOrder = new Order(OrderStatus.SHIPPED, 1);
+        Order initialOrder = new Order(OrderStatus.SHIPPED, ORDER_ID);
         orderRepository.addOrder(initialOrder);
 
-        OrderApprovalRequest request = new OrderApprovalRequest(1, false);
+        OrderApprovalRequest request = new OrderApprovalRequest(ORDER_ID, false);
 
         useCase.run(request);
 
