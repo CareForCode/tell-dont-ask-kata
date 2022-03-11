@@ -14,9 +14,6 @@ public class Order {
     private OrderStatus status;
     private int id;
 
-    public Order() {
-    }
-
     public Order(OrderStatus status, int id) {
         this.status = status;
         this.id = id;
@@ -57,16 +54,8 @@ public class Order {
         return status;
     }
 
-    public void setStatus(OrderStatus status) {
-        this.status = status;
-    }
-
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void addItem(OrderItem orderItem) {
