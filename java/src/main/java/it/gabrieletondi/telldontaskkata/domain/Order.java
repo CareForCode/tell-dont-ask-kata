@@ -8,15 +8,17 @@ import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.CREATED;
 
 public class Order {
     private BigDecimal total;
-    private String currency;
-    private List<OrderItem> items;
+    private final String currency;
+    private final List<OrderItem> items;
     private BigDecimal tax;
     private OrderStatus status;
-    private int id;
+    private final int id;
 
     public Order(OrderStatus status, int id) {
         this.status = status;
         this.id = id;
+        this.currency = null;
+        this.items = null;
     }
 
     public Order(OrderStatus status, List<OrderItem> items, String currency, BigDecimal total, BigDecimal tax) {
@@ -25,6 +27,7 @@ public class Order {
         this.items = items;
         this.tax = tax;
         this.status = status;
+        this.id = 0;
     }
 
     public static Order createNewOrder() {
