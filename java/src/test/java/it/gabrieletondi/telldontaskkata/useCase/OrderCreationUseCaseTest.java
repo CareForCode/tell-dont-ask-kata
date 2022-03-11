@@ -40,7 +40,7 @@ public class OrderCreationUseCaseTest {
 
         SellItemRequest tomatoRequest = new SellItemRequest("tomato", 3);
 
-        final SellItemsRequest request = new SellItemsRequest(new ArrayList<SellItemRequest>());
+        final SellItemsRequest request = new SellItemsRequest(new ArrayList<>());
         request.getRequests().add(saladRequest);
         request.getRequests().add(tomatoRequest);
 
