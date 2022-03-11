@@ -33,11 +33,7 @@ public class OrderCreationUseCaseTest {
     );
 
     private Product getProduct(final String name, final BigDecimal price, final Category category) {
-        return new Product() {{
-            setName(name);
-            setPrice(price);
-            setCategory(category);
-        }};
+        return new Product(name, price, category);
     }
 
     private final OrderCreationUseCase useCase = new OrderCreationUseCase(orderRepository, productCatalog);
