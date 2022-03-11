@@ -69,8 +69,7 @@ public class OrderCreationUseCaseTest {
     public void unknownProduct() throws Exception {
         SellItemsRequest request = new SellItemsRequest();
         request.setRequests(new ArrayList<>());
-        SellItemRequest unknownProductRequest = new SellItemRequest();
-        unknownProductRequest.setProductName("unknown product");
+        SellItemRequest unknownProductRequest = new SellItemRequest("unknown product", 0);
         request.getRequests().add(unknownProductRequest);
 
         useCase.run(request);
