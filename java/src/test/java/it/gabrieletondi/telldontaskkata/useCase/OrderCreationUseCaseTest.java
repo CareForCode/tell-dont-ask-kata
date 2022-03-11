@@ -36,13 +36,9 @@ public class OrderCreationUseCaseTest {
 
     @Test
     public void sellMultipleItems() throws Exception {
-        SellItemRequest saladRequest = new SellItemRequest();
-        saladRequest.setProductName("salad");
-        saladRequest.setQuantity(2);
+        SellItemRequest saladRequest = getSellItemRequest("salad", 2);
 
-        SellItemRequest tomatoRequest = new SellItemRequest();
-        tomatoRequest.setProductName("tomato");
-        tomatoRequest.setQuantity(3);
+        SellItemRequest tomatoRequest = getSellItemRequest("tomato", 3);
 
         final SellItemsRequest request = new SellItemsRequest();
         request.setRequests(new ArrayList<>());
@@ -67,6 +63,13 @@ public class OrderCreationUseCaseTest {
         assertThat(insertedOrder.getItems().get(1).getQuantity(), is(3));
         assertThat(insertedOrder.getItems().get(1).getTaxedAmount(), is(new BigDecimal("15.36")));
         assertThat(insertedOrder.getItems().get(1).getTax(), is(new BigDecimal("1.41")));
+    }
+
+    private SellItemRequest getSellItemRequest(String salad, int quantity) {
+        SellItemRequest saladRequest = new SellItemRequest(salad, quantity);
+        saladRequest.setProductName(salad);
+        saladRequest.setQuantity(quantity);
+        return saladRequest;
     }
 
     @Test(expected = UnknownProductException.class)
