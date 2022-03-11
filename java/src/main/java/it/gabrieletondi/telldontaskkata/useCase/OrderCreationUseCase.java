@@ -22,18 +22,26 @@ public class OrderCreationUseCase {
     public void run(SellItemsRequest request) {
         Order order = Order.createNewOrder();
 
-        for (SellItemRequest itemRequest : request.getRequests()) {
-            Product product = productCatalog.getByName(itemRequest.getProductName());
-
-            if (product == null) {
-                throw new UnknownProductException();
-            }
-            else {
-                order.addProductToOrder(product, itemRequest.getQuantity());
-            }
-        }
+        addItemsRequestToOrder(request, order);
 
         orderRepository.save(order);
+    }
+
+    private void addItemsRequestToOrder(SellItemsRequest request, Order order) {
+        for (SellItemRequest itemRequest : request.getRequests()) {
+            addItemRequestToOrder(order, itemRequest);
+        }
+    }
+
+    private void addItemRequestToOrder(Order order, SellItemRequest itemRequest) {
+        Product product = productCatalog.getByName(itemRequest.getProductName());
+
+        if (product == null) {
+            throw new UnknownProductException();
+        }
+        else {
+            order.addProductToOrder(product, itemRequest.getQuantity());
+        }
     }
 
 }
