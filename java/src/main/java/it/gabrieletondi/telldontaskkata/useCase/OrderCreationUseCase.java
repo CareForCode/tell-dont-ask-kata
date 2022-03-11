@@ -33,7 +33,10 @@ public class OrderCreationUseCase {
 
     private void addItemRequestToOrder(Order order, SellItemRequest itemRequest) {
         Product product = productCatalog.getByName(itemRequest.getProductName());
+        addProductToOrder(order, itemRequest, product);
+    }
 
+    private void addProductToOrder(Order order, SellItemRequest itemRequest, Product product) {
         if (product == null) {
             throw new UnknownProductException();
         }
