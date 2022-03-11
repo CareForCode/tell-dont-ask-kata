@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.CREATED;
+
 public class Order {
     private BigDecimal total;
     private String currency;
@@ -99,5 +101,9 @@ public class Order {
 
     public void approveOrder(boolean approved) {
         status = approved ? OrderStatus.APPROVED : OrderStatus.REJECTED;
+    }
+
+    public boolean isCreated() {
+        return getStatus().equals(CREATED);
     }
 }

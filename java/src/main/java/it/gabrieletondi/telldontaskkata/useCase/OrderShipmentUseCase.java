@@ -8,7 +8,6 @@ import it.gabrieletondi.telldontaskkata.useCase.exception.OrderCannotBeShippedEx
 import it.gabrieletondi.telldontaskkata.useCase.exception.OrderCannotBeShippedTwiceException;
 import it.gabrieletondi.telldontaskkata.useCase.request.OrderShipmentRequest;
 
-import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.CREATED;
 import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.REJECTED;
 import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.SHIPPED;
 
@@ -24,7 +23,7 @@ public class OrderShipmentUseCase {
     public void run(OrderShipmentRequest request) {
         final Order order = orderRepository.getById(request.getOrderId());
 
-        if (order.getStatus().equals(CREATED) || order.getStatus().equals(REJECTED)) {
+        if (order.isCreated() || order.isRejected()) {
             throw new OrderCannotBeShippedException();
         }
 
@@ -37,4 +36,6 @@ public class OrderShipmentUseCase {
         order.setStatus(OrderStatus.SHIPPED);
         orderRepository.save(order);
     }
+
+
 }
