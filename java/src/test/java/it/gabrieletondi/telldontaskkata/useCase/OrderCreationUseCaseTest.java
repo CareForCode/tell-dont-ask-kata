@@ -27,14 +27,10 @@ public class OrderCreationUseCaseTest {
     }};;
     private final ProductCatalog productCatalog = new InMemoryProductCatalog(
             Arrays.<Product>asList(
-                    getProduct("salad", new BigDecimal("3.56"), food),
-                    getProduct("tomato", new BigDecimal("4.65"), food)
+                    new Product("salad", new BigDecimal("3.56"), food),
+                    new Product("tomato", new BigDecimal("4.65"), food)
             )
     );
-
-    private Product getProduct(final String name, final BigDecimal price, final Category category) {
-        return new Product(name, price, category);
-    }
 
     private final OrderCreationUseCase useCase = new OrderCreationUseCase(orderRepository, productCatalog);
 
