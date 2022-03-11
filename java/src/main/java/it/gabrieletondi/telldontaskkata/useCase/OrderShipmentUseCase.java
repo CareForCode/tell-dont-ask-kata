@@ -27,7 +27,7 @@ public class OrderShipmentUseCase {
             throw new OrderCannotBeShippedException();
         }
 
-        if (order.getStatus().equals(SHIPPED)) {
+        if (order.isShipped()) {
             throw new OrderCannotBeShippedTwiceException();
         }
 
