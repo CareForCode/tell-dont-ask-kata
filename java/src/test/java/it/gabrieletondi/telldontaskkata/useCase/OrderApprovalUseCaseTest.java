@@ -22,7 +22,7 @@ public class OrderApprovalUseCaseTest {
         Order initialOrder = new Order(OrderStatus.CREATED, 1);
         orderRepository.addOrder(initialOrder);
 
-        OrderApprovalRequest request = getOrderApprovalRequest(true);
+        OrderApprovalRequest request = new OrderApprovalRequest(1, true);
 
         useCase.run(request);
 
@@ -30,16 +30,12 @@ public class OrderApprovalUseCaseTest {
         assertThat(savedOrder.getStatus(), is(OrderStatus.APPROVED));
     }
 
-    private OrderApprovalRequest getOrderApprovalRequest(boolean approved) {
-        return new OrderApprovalRequest(1, approved);
-    }
-
     @Test
     public void rejectedExistingOrder() throws Exception {
         Order initialOrder = new Order(OrderStatus.CREATED, 1);
         orderRepository.addOrder(initialOrder);
 
-        OrderApprovalRequest request = getOrderApprovalRequest(false);
+        OrderApprovalRequest request = new OrderApprovalRequest(1, false);
 
         useCase.run(request);
 
@@ -52,7 +48,7 @@ public class OrderApprovalUseCaseTest {
         Order initialOrder = new Order(OrderStatus.REJECTED, 1);
         orderRepository.addOrder(initialOrder);
 
-        OrderApprovalRequest request = getOrderApprovalRequest(true);
+        OrderApprovalRequest request = new OrderApprovalRequest(1, true);
 
         useCase.run(request);
 
@@ -64,7 +60,7 @@ public class OrderApprovalUseCaseTest {
         Order initialOrder = new Order(OrderStatus.APPROVED, 1);
         orderRepository.addOrder(initialOrder);
 
-        OrderApprovalRequest request = getOrderApprovalRequest(false);
+        OrderApprovalRequest request = new OrderApprovalRequest(1, false);
 
         useCase.run(request);
 
@@ -76,7 +72,7 @@ public class OrderApprovalUseCaseTest {
         Order initialOrder = new Order(OrderStatus.SHIPPED, 1);
         orderRepository.addOrder(initialOrder);
 
-        OrderApprovalRequest request = getOrderApprovalRequest(true);
+        OrderApprovalRequest request = new OrderApprovalRequest(1, true);
 
         useCase.run(request);
 
@@ -88,7 +84,7 @@ public class OrderApprovalUseCaseTest {
         Order initialOrder = new Order(OrderStatus.SHIPPED, 1);
         orderRepository.addOrder(initialOrder);
 
-        OrderApprovalRequest request = getOrderApprovalRequest(false);
+        OrderApprovalRequest request = new OrderApprovalRequest(1, false);
 
         useCase.run(request);
 
