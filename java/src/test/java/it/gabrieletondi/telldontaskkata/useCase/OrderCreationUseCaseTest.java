@@ -41,8 +41,8 @@ public class OrderCreationUseCaseTest {
         SellItemRequest tomatoRequest = new SellItemRequest("tomato", 3);
 
         final SellItemsRequest request = new SellItemsRequest(new ArrayList<>());
-        request.getRequests().add(saladRequest);
-        request.getRequests().add(tomatoRequest);
+        request.addRequest(saladRequest);
+        request.addRequest(tomatoRequest);
 
         useCase.run(request);
 
@@ -68,7 +68,7 @@ public class OrderCreationUseCaseTest {
     public void unknownProduct() throws Exception {
         SellItemsRequest request = new SellItemsRequest(new ArrayList<>());
         SellItemRequest unknownProductRequest = new SellItemRequest("unknown product", 0);
-        request.getRequests().add(unknownProductRequest);
+        request.addRequest(unknownProductRequest);
 
         useCase.run(request);
     }

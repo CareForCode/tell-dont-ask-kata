@@ -13,4 +13,8 @@ public class SellItemsRequest {
     public List<SellItemRequest> getRequests() {
         return requests;
     }
+
+    public void addRequest(SellItemRequest saladRequest) {
+        getRequests().add(saladRequest);
+    }
 }
