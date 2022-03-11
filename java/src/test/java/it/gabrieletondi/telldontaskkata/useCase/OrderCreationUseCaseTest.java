@@ -65,7 +65,7 @@ public class OrderCreationUseCaseTest {
     }
 
     private SellItemsRequest getSellItemsRequest(ArrayList<SellItemRequest> requests) {
-        final SellItemsRequest request = new SellItemsRequest();
+        final SellItemsRequest request = new SellItemsRequest(requests);
         request.setRequests(requests);
         return request;
     }
