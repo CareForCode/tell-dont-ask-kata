@@ -99,12 +99,12 @@ public class Order {
         return status == OrderStatus.REJECTED;
     }
 
-    public void approveOrder(boolean approved) {
-        status = approved ? OrderStatus.APPROVED : OrderStatus.REJECTED;
-    }
-
     public boolean isCreated() {
         return status == CREATED;
+    }
+
+    public void approveOrder(boolean approved) {
+        status = approved ? OrderStatus.APPROVED : OrderStatus.REJECTED;
     }
 
     public void ship() {
