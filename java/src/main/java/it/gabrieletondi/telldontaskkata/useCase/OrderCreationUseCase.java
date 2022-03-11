@@ -21,9 +21,7 @@ public class OrderCreationUseCase {
 
     public void run(SellItemsRequest request) {
         Order order = Order.createNewOrder();
-
         addItemsRequestToOrder(request, order);
-
         orderRepository.save(order);
     }
 
