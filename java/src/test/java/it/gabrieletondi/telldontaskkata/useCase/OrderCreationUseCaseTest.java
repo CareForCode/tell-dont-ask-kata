@@ -1,9 +1,6 @@
 package it.gabrieletondi.telldontaskkata.useCase;
 
-import it.gabrieletondi.telldontaskkata.domain.Category;
-import it.gabrieletondi.telldontaskkata.domain.Order;
-import it.gabrieletondi.telldontaskkata.domain.OrderStatus;
-import it.gabrieletondi.telldontaskkata.domain.Product;
+import it.gabrieletondi.telldontaskkata.domain.*;
 import it.gabrieletondi.telldontaskkata.doubles.InMemoryProductCatalog;
 import it.gabrieletondi.telldontaskkata.doubles.TestOrderRepository;
 import it.gabrieletondi.telldontaskkata.repository.ProductCatalog;
@@ -43,21 +40,27 @@ public class OrderCreationUseCaseTest {
         useCase.run(request);
 
         final Order insertedOrder = orderRepository.getSavedOrder();
-        assertThat(insertedOrder.getStatus(), is(OrderStatus.CREATED));
-        assertThat(insertedOrder.getTotal(), is(new BigDecimal("23.20")));
-        assertThat(insertedOrder.getTax(), is(new BigDecimal("2.13")));
-        assertThat(insertedOrder.getCurrency(), is("EUR"));
-        assertThat(insertedOrder.getItems(), hasSize(2));
-        assertThat(insertedOrder.getItems().get(0).getProduct().getName(), is("salad"));
-        assertThat(insertedOrder.getItems().get(0).getProduct().getPrice(), is(new BigDecimal("3.56")));
-        assertThat(insertedOrder.getItems().get(0).getQuantity(), is(2));
-        assertThat(insertedOrder.getItems().get(0).getTaxedAmount(), is(new BigDecimal("7.84")));
-        assertThat(insertedOrder.getItems().get(0).getTax(), is(new BigDecimal("0.72")));
-        assertThat(insertedOrder.getItems().get(1).getProduct().getName(), is("tomato"));
-        assertThat(insertedOrder.getItems().get(1).getProduct().getPrice(), is(new BigDecimal("4.65")));
-        assertThat(insertedOrder.getItems().get(1).getQuantity(), is(3));
-        assertThat(insertedOrder.getItems().get(1).getTaxedAmount(), is(new BigDecimal("15.36")));
-        assertThat(insertedOrder.getItems().get(1).getTax(), is(new BigDecimal("1.41")));
+        assertOrder(insertedOrder, OrderStatus.CREATED, new BigDecimal("23.20"), new BigDecimal("2.13"), "EUR", 2);
+        assertOrderItem(insertedOrder.getItems().get(0), "salad", 2,
+                new BigDecimal("3.56"), new BigDecimal("7.84"), new BigDecimal("0.72"));
+        assertOrderItem(insertedOrder.getItems().get(1), "tomato", 3,
+                new BigDecimal("4.65"), new BigDecimal("15.36"), new BigDecimal("1.41"));
+    }
+
+    private void assertOrder(Order insertedOrder, OrderStatus orderStatus, BigDecimal total, BigDecimal tax, String currency, int expectedItemSize) {
+        assertThat(insertedOrder.getStatus(), is(orderStatus));
+        assertThat(insertedOrder.getTotal(), is(total));
+        assertThat(insertedOrder.getTax(), is(tax));
+        assertThat(insertedOrder.getCurrency(), is(currency));
+        assertThat(insertedOrder.getItems(), hasSize(expectedItemSize));
+    }
+
+    private void assertOrderItem(OrderItem orderItem, String name, int quantity, BigDecimal price, BigDecimal taxedAmount, BigDecimal tax) {
+        assertThat(orderItem.getProduct().getName(), is(name));
+        assertThat(orderItem.getProduct().getPrice(), is(price));
+        assertThat(orderItem.getQuantity(), is(quantity));
+        assertThat(orderItem.getTaxedAmount(), is(taxedAmount));
+        assertThat(orderItem.getTax(), is(tax));
     }
 
     @Test(expected = UnknownProductException.class)
