@@ -66,10 +66,7 @@ public class OrderCreationUseCaseTest {
     }
 
     private SellItemRequest getSellItemRequest(String salad, int quantity) {
-        SellItemRequest saladRequest = new SellItemRequest(salad, quantity);
-        saladRequest.setProductName(salad);
-        saladRequest.setQuantity(quantity);
-        return saladRequest;
+        return new SellItemRequest(salad, quantity);
     }
 
     @Test(expected = UnknownProductException.class)
