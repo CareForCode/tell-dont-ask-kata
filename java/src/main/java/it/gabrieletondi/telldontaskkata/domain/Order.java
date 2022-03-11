@@ -69,7 +69,7 @@ public class Order {
         total = total.add(taxedAmount);
     }
 
-    public void addTaxAmount(BigDecimal taxAmount) {
+    public void addTaxAmountToTax(BigDecimal taxAmount) {
         tax = tax.add(taxAmount);
     }
 
@@ -81,7 +81,7 @@ public class Order {
         addItem(orderItem);
 
         addTaxedAmountToTotal(taxedAmount);
-        addTaxAmount(taxAmount);
+        addTaxAmountToTax(taxAmount);
     }
 
     public boolean isShipped() {
