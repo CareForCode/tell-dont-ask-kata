@@ -17,6 +17,11 @@ public class Order {
     public Order() {
     }
 
+    public Order(OrderStatus status, int id) {
+        this.status = status;
+        this.id = id;
+    }
+
     public Order(OrderStatus status, List<OrderItem> items, String currency, BigDecimal total, BigDecimal tax) {
         this.total = total;
         this.currency = currency;
@@ -30,6 +35,10 @@ public class Order {
                 "EUR",
                 new BigDecimal("0.00"),
                 new BigDecimal("0.00"));
+    }
+
+    public Order getOrder(OrderStatus status, int id) {
+        return new Order(status, id);
     }
 
     public BigDecimal getTotal() {
