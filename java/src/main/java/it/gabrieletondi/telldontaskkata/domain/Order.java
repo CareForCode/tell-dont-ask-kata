@@ -34,10 +34,6 @@ public class Order {
         return total;
     }
 
-    public void setTotal(BigDecimal total) {
-        this.total = total;
-    }
-
     public String getCurrency() {
         return currency;
     }
@@ -48,10 +44,6 @@ public class Order {
 
     public BigDecimal getTax() {
         return tax;
-    }
-
-    public void setTax(BigDecimal tax) {
-        this.tax = tax;
     }
 
     public OrderStatus getStatus() {
@@ -91,5 +83,21 @@ public class Order {
 
         addTaxedAmountToTotal(taxedAmount);
         addTaxAmount(taxAmount);
+    }
+
+    public boolean isShipped() {
+        return status == OrderStatus.SHIPPED;
+    }
+
+    public boolean isApproved() {
+        return status == OrderStatus.APPROVED;
+    }
+
+    public boolean isRejected() {
+        return status == OrderStatus.REJECTED;
+    }
+
+    public void approveOrder(boolean approved) {
+        status = approved ? OrderStatus.APPROVED : OrderStatus.REJECTED;
     }
 }
