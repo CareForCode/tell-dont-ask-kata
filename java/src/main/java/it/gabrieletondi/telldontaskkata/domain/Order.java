@@ -37,10 +37,6 @@ public class Order {
                 new BigDecimal("0.00"));
     }
 
-    public Order getOrder(OrderStatus status, int id) {
-        return new Order(status, id);
-    }
-
     public BigDecimal getTotal() {
         return total;
     }
