@@ -40,8 +40,7 @@ public class OrderCreationUseCaseTest {
 
         SellItemRequest tomatoRequest = new SellItemRequest("tomato", 3);
 
-        final SellItemsRequest request = new SellItemsRequest();
-        request.setRequests(new ArrayList<>());
+        final SellItemsRequest request = getSellItemsRequest(new ArrayList<SellItemRequest>());
         request.getRequests().add(saladRequest);
         request.getRequests().add(tomatoRequest);
 
@@ -65,10 +64,15 @@ public class OrderCreationUseCaseTest {
         assertThat(insertedOrder.getItems().get(1).getTax(), is(new BigDecimal("1.41")));
     }
 
+    private SellItemsRequest getSellItemsRequest(ArrayList<SellItemRequest> requests) {
+        final SellItemsRequest request = new SellItemsRequest();
+        request.setRequests(requests);
+        return request;
+    }
+
     @Test(expected = UnknownProductException.class)
     public void unknownProduct() throws Exception {
-        SellItemsRequest request = new SellItemsRequest();
-        request.setRequests(new ArrayList<>());
+        SellItemsRequest request = getSellItemsRequest(new ArrayList<>());
         SellItemRequest unknownProductRequest = new SellItemRequest("unknown product", 0);
         request.getRequests().add(unknownProductRequest);
 
