@@ -106,4 +106,8 @@ public class Order {
     public boolean isCreated() {
         return getStatus().equals(CREATED);
     }
+
+    public void ship() {
+        status = OrderStatus.SHIPPED;
+    }
 }

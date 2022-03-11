@@ -1,15 +1,11 @@
 package it.gabrieletondi.telldontaskkata.useCase;
 
 import it.gabrieletondi.telldontaskkata.domain.Order;
-import it.gabrieletondi.telldontaskkata.domain.OrderStatus;
 import it.gabrieletondi.telldontaskkata.repository.OrderRepository;
 import it.gabrieletondi.telldontaskkata.service.ShipmentService;
 import it.gabrieletondi.telldontaskkata.useCase.exception.OrderCannotBeShippedException;
 import it.gabrieletondi.telldontaskkata.useCase.exception.OrderCannotBeShippedTwiceException;
 import it.gabrieletondi.telldontaskkata.useCase.request.OrderShipmentRequest;
-
-import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.REJECTED;
-import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.SHIPPED;
 
 public class OrderShipmentUseCase {
     private final OrderRepository orderRepository;
@@ -33,7 +29,7 @@ public class OrderShipmentUseCase {
 
         shipmentService.ship(order);
 
-        order.setStatus(OrderStatus.SHIPPED);
+        order.ship();
         orderRepository.save(order);
     }
 
